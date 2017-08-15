@@ -27,6 +27,7 @@ var map = new ol.Map({
 var app = {
     mapzenKey: 'mapzen-CpAANqF',
     activeSearch: 'from',
+    options: [],
   
     typeAhead: function(e){
         var el = e.target;
@@ -50,6 +51,24 @@ var app = {
         }
       })
   }, 150)
+
+  renderResultslist: function(){
+     var resultslist = ${'#results-list');
+     resultsList.empty():
+  
+     var results = app.options.map(function(feature){
+         var li=$('<li class="results-list-item">' + feature.properties.label + '</li>');
+         reture li;
+     })
+     
+     resultsList.append(results);
+
+     if(app.options.length > 0){
+       resultsList.removeClass('hidden');
+     }else{
+       resultsList.addClass('hidden');
+     }   
+   }
 }
 
 $('#search-from-input').on('keyup',(input:'from'), app.typeAhead);
