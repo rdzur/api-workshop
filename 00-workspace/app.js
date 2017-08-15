@@ -108,7 +108,10 @@ var app = {
 
   clearList: function(e){
     app.options = [];
+    app.trip = {};
     app.renderResultsList();
+    app.renderDirectionsList();
+    app.routeLayer.setSource(null);
   },
 
   clearSearch: function(e){
@@ -139,6 +142,7 @@ var app = {
     $.ajax({
       url: 'https://valhalla.mapzen.com/route?json=' + JSON.stringify(json) + '&api_key=' + app.mapzenKey,
       success: function(data, status, req){
+        app.trip = data.trip;
         var coords = polyline.decode(data.trip.legs[0].shape);
         callback(null, coords);
       },
@@ -167,9 +171,9 @@ var app = {
       map.getView().fit(
         app.routeLayer.getSource().getExtent(),
         map.getSize()
-      )
-      
-      //app.renderDirectionsList();
+      )      
+
+      app.renderDirectionsList();
     }
   },
 
