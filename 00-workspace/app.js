@@ -35,7 +35,9 @@ var app = {
       
       if(val.length > 2){
       app.queryAutocomplete(val, function(err, data){
-          console.log(data);
+          if(err) return console.log(err);
+          if(data.featrues) app.options = data.features;
+          app.renderResultsList();
         })
       }
     },
