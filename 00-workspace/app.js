@@ -28,6 +28,10 @@ var app = {
     mapzenKey: 'mapzen-CpAANqF',
     activeSearch: 'from',
     options: [],
+    selection: {
+         from: {},
+         to: {}
+    },
   
     typeAhead: function(e){
         var el = e.target;
@@ -39,6 +43,8 @@ var app = {
           if(data.featrues) app.options = data.features;
           app.renderResultsList();
         })
+      }else{
+        app.clearList();
       }
     },
   
@@ -70,7 +76,26 @@ var app = {
      }else{
        resultsList.addClass('hidden');
      }   
-   }
+   },
+     
+     selectItem: function(feature){
+         app.selection[app.activeSearch] = feature;
+         var elId = '#search-' + app.activeSearch + '-input':
+         $(elId).val(feature.properties.label);
+         app.clearList();
+     },
+       
+     clearList: function(){
+         app.options = [];
+         app.renderResultsList();
+     },
+       
+     clearSearch: function(e){
+       var elID = '#search-' + e.data.input + '-input';
+       $(elId).val('').trigger('keyup');
+       app.selection[e.data.input] = {};
+     }
 }
 
 $('#search-from-input').on('keyup',(input:'from'), app.typeAhead);
+$('#search-from-search').on('click',(input:'from'), app.typeSearch);
