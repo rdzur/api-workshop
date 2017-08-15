@@ -102,6 +102,8 @@ var app = {
 
 }
 
+// SETUP EVENT BINDING HERE
+
 $('#search-from-input').on('keyup', {input:'from'}, app.typeAhead);
 $('#clear-from-search').on('click', {input:'from'}, app.clearSearch);
 $('#search-from-input').on('focus', function(){app.activeSearch = 'from'});
